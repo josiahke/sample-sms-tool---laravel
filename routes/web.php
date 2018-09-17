@@ -24,4 +24,7 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function() {
     Route::any('/home', 'HomeController@index')->name('home');
     Route::post('/send/sms', 'HomeController@SendSms')->name('send.sms');
+
+    Route::any('/list/sms', ['nocsrf' => true,'uses' => 'HomeController@ListSmsSent'])->name('list.sms.sent');
+
 });

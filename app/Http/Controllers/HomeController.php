@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SmsLog;
 use Illuminate\Http\Request;
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
@@ -66,14 +67,20 @@ class HomeController extends Controller
         if ($sent[0]['status'] = 'Success') {
             $smsData['status'] = 1;
             event(new SmsSent(auth()->user(),$smsData));
+            flash('sms was sent')->success();
             return redirect()->back()->withSuccess('sms was sent');
         }
 
         $smsData['status'] = 0;
         event(new SmsSent(auth()->user(),$smsData));
-
+        flash('sms was NOT sent')->success();
         return redirect()->back()->withError('sms was not sent');
 
+    }
+
+    public function ListSmsSent (Request $request) {
+        $list = SmsLog::select(['id','sms','status','created_by','created_at'])->with('user');
+        return Datatables::of($list)->make();
     }
 
 }

@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{asset('css/intlTelInput.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('js/sweetalert2/dist/sweetalert2.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('js/datatables/datatables.min.css') }}" />
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -87,6 +88,9 @@
         </nav>
 
         <main class="py-4">
+
+            @include('flash::message')
+
             @yield('content')
         </main>
     </div>
@@ -95,6 +99,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/sweetalert2/dist/sweetalert2.min.js') }}" ></script>
 {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
+<script src="{{ asset('js/datatables/datatables.min.js')}}"></script>
 <script src="{{ asset('js/intlTelInput.js')}}"></script>
 
 @yield('js')

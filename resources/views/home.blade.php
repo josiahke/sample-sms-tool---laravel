@@ -36,7 +36,7 @@
                 <div class="card-header">Sms Sent</div>
                 <div class="card-body">
 
-                    <table class="table table-bordered" width="100%">
+                    <table class="table table-bordered" width="100%" id="sms_sent">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -61,6 +61,7 @@
 
 
 @section('js')
+
     <script >
         $('#sms').on("input", function(){
             var maxlength = $(this).attr("maxlength");
@@ -118,4 +119,56 @@
         telInput.on("keyup change", reset);
 
     </script>
+
+    <script>
+        var smssent = $('#sms_sent').DataTable({
+            pageLength: 10,
+            lengthMenu: [
+                [5, 10, 25, 50, 100,18446744073709551615],
+                [5, 10, 25, 50, 100,'All'] // change per page values here
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                'pageLength', //'copy', 'excel', 'pdf',
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        //columns: ':not(:last-child)',
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        //columns: ':not(:last-child)',
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        //columns: ':not(:last-child)',
+                    }
+                }
+            ]
+            ,
+            "scrollX": true,
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            "order": [],
+            "ordering": false,
+            ajax: {
+                url: '{!! route('list.sms.sent') !!}',
+                method: 'POST'
+            },
+            //select: true,
+            columns: [
+                {data: 'id', name: 'id', orderable: false, searchable: true },
+                {data: 'sms', name: 'sms', "defaultContent": "N/A", orderable: false, searchable: true },
+                {data: 'status', name: 'status', "defaultContent": "N/A", orderable: false, searchable: true },
+                {data: 'user.name', name: 'user.name', "defaultContent": "N/A", orderable: false, searchable: true },
+                {data: 'created_at', name: 'created_at', orderable: false, searchable: true}
+            ]
+        });
+    </script>
+
 @endsection

@@ -9,8 +9,6 @@ class SmsLog extends Model   implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    
-
     /**
      * The database table used by the model.
      *
@@ -49,5 +47,16 @@ class SmsLog extends Model   implements Auditable
     protected $auditExclude = [
         'id',
     ];
+
+    public function getStatusAttribute($value)
+    {
+        return $value ==0 ? 'no sent' : 'sent';
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'created_by');
+    }
+
 
 }
