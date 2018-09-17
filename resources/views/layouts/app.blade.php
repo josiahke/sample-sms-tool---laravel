@@ -16,6 +16,7 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{asset('css/intlTelInput.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('js/sweetalert2/dist/sweetalert2.min.css') }}" />
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -92,10 +93,13 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/sweetalert2/dist/sweetalert2.min.js') }}" ></script>
 {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
 <script src="{{ asset('js/intlTelInput.js')}}"></script>
 
 @yield('js')
+
+{{--@include('partials.messages')--}}
 
 </body>
 </html>

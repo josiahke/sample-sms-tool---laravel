@@ -35,4 +35,9 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'africa'   => [
+        'key'      => env('AFRICA_KEY','5b9b8a3cbd46398165a960c69dd26b8bb4a5f81519476c979aaf902e183809d0'),
+        'username' => env('AFRICA_USERNAME','sandbox'),
+    ],
+
 ];

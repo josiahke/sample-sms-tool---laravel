@@ -22,7 +22,7 @@ class SmsSent
      * @return void
      */
 
-    public function __construct(User $user, $sms)
+    public function __construct($user, $sms)
     {
         //
         $this->user = $user;

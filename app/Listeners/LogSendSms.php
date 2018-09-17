@@ -2,9 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\UserRegistered;
+use App\Events\SmsSent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
+use App\SmsLog;
 
 class LogSendSms
 {
@@ -21,11 +23,15 @@ class LogSendSms
     /**
      * Handle the event.
      *
-     * @param  UserRegistered  $event
+     * @param  SmsSent  $event
      * @return void
      */
-    public function handle(UserRegistered $event)
+    public function handle(SmsSent $data)
     {
         //
+        $log = new SmsLog();
+        $log->fill($data->sms);
+        $log->save();
+        //return true ;
     }
 }

@@ -6,25 +6,26 @@ use App\library\AfricasTalkingGateway;
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\NumberParseException;
-use Illuminate\Support\Facades\Log;
+use Log;
 use DB;
+use Config;
 
 class Sender
 {
+
     public static function t(){
         echo "one";
     }
-    public function ValidateAndSendSms($numbers, $data, $type)
+
+    public function ValidateAndSendSms($numbers, $data, $type = 'sms')
     {
         if (!$this->prepNumbers($numbers)) {
             return FALSE;
         }
         $recipients = $this->prepNumbers($numbers);
-        $message = trans('messages.' . $type, $data);
-        $result = self::sendMessage($recipients, $message);
-
+        //$message = trans('messages.'.$type, $data);
+        $result = self::sendMessage($recipients, $data['sms']);
         Log::alert('sending sms log : ' . json_encode($result));
-
         return $result;
     }
 
@@ -38,7 +39,6 @@ class Sender
         }
         if (count($validNumbers) > 0) {
             Log::info(implode(",", $validNumbers));
-
             return implode(",", $validNumbers);
         }
 
@@ -48,14 +48,15 @@ class Sender
     public function sendMessage($recipients, $message)
     {
         $gateway = new AfricasTalkingGateway(config('services.africa.username'), config('services.africa.key'));
+        //$gateway    = new AfricasTalkingGateway($username, $apikey);
+
         try {
-            $results = $gateway->sendMessage($recipients, $message, 'MOOKH');
+            $results = $gateway->sendMessage($recipients, $message);
 
             $response = [];
             foreach ($results as $key => $result) {
                 $response[ $key ]['number'] = $result->number;
                 $response[ $key ]['status'] = $result->status;
-
             }
 
             return $response;
@@ -65,18 +66,7 @@ class Sender
 
     }
 
-    public function ticketCount($data)
-    {
-        $d = DB::table('ticket_order_pivot')
-            ->where('ticket_order_id', '=', $data['ticket_order_id'])
-            ->where('ticket_category_id', '=', $data['ticket_category_id'])
-            ->first();
-        if ($d == null) {
-            DB::table('ticket_order_pivot')->insert($data);
-        }
 
-        return TRUE;
-    }
 
     public function validatePhoneNumber($number)
     {
@@ -88,9 +78,9 @@ class Sender
                 return FALSE;
             }
             $internationalNumber = $phoneUtil->format($NumberProto, PhoneNumberFormat::E164);
-
             return $internationalNumber;
-            Log::alert($internationalNumber);
+            //Log::alert($internationalNumber);
+
         } catch (NumberParseException $e) {
             return FALSE;
         }

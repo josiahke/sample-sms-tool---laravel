@@ -23,7 +23,7 @@ class SmsLog extends Model   implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['phone', 'msg', 'status', 'created_by'];
+    protected $fillable = ['phone', 'sms', 'status', 'created_by'];
 
     /**
      * The attributes excluded from the model's JSON form.
