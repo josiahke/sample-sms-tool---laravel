@@ -10,14 +10,29 @@
     <title>- Simple SMS Tool - </title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="{{asset('css/intlTelInput.css')}}">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .hide {
+            display: none; }
+        #error-msg {
+            color: red;
+        }
+        #valid-msg {
+            color: #00C900;
+        }
+        input.error {
+            border: 1px solid #FF7C7C;
+        }
+    </style>
+
 </head>
 <body>
     <div id="app">
@@ -74,8 +89,13 @@
             @yield('content')
         </main>
     </div>
-</body>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+{{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
+<script src="{{ asset('js/intlTelInput.js')}}"></script>
 
 @yield('js')
+
+</body>
 </html>

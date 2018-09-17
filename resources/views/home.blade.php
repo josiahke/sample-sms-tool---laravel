@@ -10,17 +10,20 @@
                 <div class="card-body">
                     {!! Form::open(['route' => 'send.sms','method' => 'post']) !!}
 
-                    {!! Form::token(); !!}
-
                     <div class="form-group">
                         <label for="exampleInputEmail1">Phone number</label>
-                        <input type="tel" class="form-control" id="phone" maxlength="14" minlength="12" placeholder="Enter phone number">
+                        <input type="tel" class="form-control" id="phone" maxlength="14" minlength="10" placeholder="Enter phone number">
+                        <span id="valid-msg" class="hide">✓ Valid</span>
+                        <span id="error-msg" class="hide">Invalid number</span>
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">SMS (<span class="pull-right" id="countchars">0</span>) </label>
-                        {{--<input type="tel" class="form-control" id="phone" placeholder="Enter phone number">--}}
-                        <textarea name="sms" id="sms" class="form-control" maxlength="160" minlength="1" > </textarea>
+                        <textarea name="sms" id="sms" class="form-control" maxlength="160" minlength="5" > </textarea>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Send</button>
                     </div>
 
                     {!! Form::close() !!}
@@ -59,15 +62,60 @@
 
 @section('js')
     <script >
-        var textarea = document.querySelector("textarea");
-        textarea.addEventListener("input", function(){
-            var maxlength = this.getAttribute("maxlength");
-            var currentLength = this.value.length;
+        $('#sms').on("input", function(){
+            var maxlength = $(this).attr("maxlength");
+            var currentLength = $(this).val().length;
+
             if( currentLength >= maxlength ){
-                document.getElementById('countchars').innerHTML("You have reached the maximum number of characters.");
+                $('#countchars').html("You have reached the maximum number of characters.");
+                //console.log("You have reached the maximum number of characters.");
             }else{
-                document.getElementById('countchars').innerHTML(maxlength - currentLength + " chars left");
+                $('#countchars').html(maxlength - currentLength + " chars left");
+                //console.log(maxlength - currentLength + " chars left");
             }
         });
+
+        $("#phone").intlTelInput({
+            initialCountry: "auto",
+            hiddenInput: "full_phone",
+            geoIpLookup: function(callback) {
+                //$.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+                    var countryCode = "KE"
+                    callback(countryCode);
+                //});
+            },
+            utilsScript: "{{asset("js/utils.js")}}" // just for formatting/placeholders etc
+        });
+
+        var telInput = $("#phone"),
+            errorMsg = $("#error-msg"),
+            validMsg = $("#valid-msg");
+
+        // initialise plugin
+        telInput.intlTelInput({
+            utilsScript: "{{asset("js/utils.js")}}"
+        });
+
+        var reset = function() {
+            telInput.removeClass("error");
+            errorMsg.addClass("hide");
+            validMsg.addClass("hide");
+        };
+
+        // on blur: validate
+        telInput.blur(function() {
+            reset();
+            if ($.trim(telInput.val())) {
+                if (telInput.intlTelInput("isValidNumber")) {
+                    validMsg.removeClass("hide");
+                } else {
+                    telInput.addClass("error");
+                    errorMsg.removeClass("hide");
+                }
+            }
+        });
+        // on keyup / change flag: reset
+        telInput.on("keyup change", reset);
+
     </script>
 @endsection
