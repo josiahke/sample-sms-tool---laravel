@@ -155,6 +155,8 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Laracademy\Generators\GeneratorsServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -215,6 +217,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

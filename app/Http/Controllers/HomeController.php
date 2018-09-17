@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
+use Carbon;
+use Form;
+
 
 class HomeController extends Controller
 {
