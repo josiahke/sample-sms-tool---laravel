@@ -153,7 +153,8 @@ return [
 
         Yajra\DataTables\DataTablesServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-
+        Laracademy\Generators\GeneratorsServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
 
         /*
          * Application Service Providers...

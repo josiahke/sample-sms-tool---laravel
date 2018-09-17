@@ -18,7 +18,7 @@ to install:
 - change file permission for storage and bootstrap folders ,as writable.
 - configure your web server for php (7.1 and above).
 - run your website on the browser.
-- enter username and password as admin
+- enter username and password as admin@test.com and admin respectively
 
 ## License
 
