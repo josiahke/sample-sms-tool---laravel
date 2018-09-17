@@ -156,6 +156,7 @@ return [
         Laracademy\Generators\GeneratorsServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Orangehill\Iseed\IseedServiceProvider::class,
 
 
         /*
