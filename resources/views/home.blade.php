@@ -36,7 +36,7 @@
                 <div class="card-header">Sms Sent</div>
                 <div class="card-body">
 
-                    <table class="table table-bordered" width="100%" id="sms_sent">
+                    <table class="table" width="100%" id="sms_sent">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -138,6 +138,12 @@
                 },
                 {
                     extend: 'excel',
+                    exportOptions: {
+                        //columns: ':not(:last-child)',
+                    }
+                },
+                {
+                    extend: 'csv',
                     exportOptions: {
                         //columns: ':not(:last-child)',
                     }
